@@ -13,6 +13,7 @@ namespace NodeTreeEditor.Contents {
 	[AddComponentMenu("NodeTreeEditor/Content/Branch")]
 	public class Branch : Content {
 
+		[HideInInspector]
 		public bool isAsync = false;
 
 		[HideInInspector]
