@@ -27,6 +27,11 @@ namespace NodeTreeEditor.Variables
 
         public abstract object GetValue();
 
+        public void PrintString(string msg)
+        {
+            print(msg);
+        }
+
         public static string[] VariablesToString(List<Value> variables)
         {
             var s = new List<string>();

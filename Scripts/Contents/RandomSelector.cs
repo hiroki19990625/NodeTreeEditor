@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 using NodeTreeEditor.Utils;
-using NodeTreeEditor.Window;
 
 #if UNITY_EDITOR
+using NodeTreeEditor.Window;
+
 using UnityEditor;
 #endif
 
@@ -42,7 +43,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -177,11 +178,12 @@ namespace NodeTreeEditor.Contents
 
             foreach (RandomTree.TreeNode node in tree.treenodes)
             {
-                menu.AddItem(new GUIContent("Node " + (c + 1)), false, GDConnect, new ArrayList() {
-                    c,
-                    content,
-                    node
-                });
+                menu.AddItem(new GUIContent("Node " + (c + 1)), false, GDConnect, new ArrayList()
+                    {
+                        c,
+                        content,
+                        node
+                    });
                 c++;
             }
             menu.ShowAsContext();
@@ -238,12 +240,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-			Handles.DrawSolidRectangleWithOutline (new Vector3[]{(f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP}, color, color);
+            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
-			GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Node" + index);
+            GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Node" + index);
 
             Handles.color = Color.black;
         }
-#endif
+        #endif
     }
 }

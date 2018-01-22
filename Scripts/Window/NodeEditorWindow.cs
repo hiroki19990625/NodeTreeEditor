@@ -143,6 +143,7 @@ namespace NodeTreeEditor.Window
                     var menu = new GenericMenu();
                     RegisterMenuAll(menu, mp);
                     menu.ShowAsContext();
+                    ev.Use();
                 }
 
                 /*if (ev.type == EventType.MouseDrag)
@@ -358,6 +359,11 @@ namespace NodeTreeEditor.Window
                 {
                     pos,
                     typeof(RandomSelector)
+                });
+            menu.AddItem(new GUIContent("Add Setter"), false, AddData, new ArrayList()
+                {
+                    pos,
+                    typeof(Setter)
                 });
             menu.AddItem(new GUIContent("Add Invoker"), false, AddData, new ArrayList()
                 {

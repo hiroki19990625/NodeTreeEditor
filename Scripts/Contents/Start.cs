@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
+#if UNITY_EDITOR
 using NodeTreeEditor.Window;
 
-#if UNITY_EDITOR
 using UnityEditor;
 #endif
 
@@ -23,11 +23,12 @@ namespace NodeTreeEditor.Contents
 
         public override IEnumerator Invoke()
         {
-            if (next == null) yield break;
+            if (next == null)
+                yield break;
             yield return next.Invoke();
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -70,7 +71,7 @@ namespace NodeTreeEditor.Contents
                 }
             }
         }
-#endif
+        #endif
     }
 }
 

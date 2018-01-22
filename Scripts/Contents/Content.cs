@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 
 using NodeTreeEditor.Variables;
-using NodeTreeEditor.Window;
 
 #if UNITY_EDITOR
+using NodeTreeEditor.Window;
+
 using UnityEditor;
 #endif
 
@@ -68,7 +69,7 @@ namespace NodeTreeEditor.Contents
             Debug.Log(obj);
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
 
         public abstract string GetDescription();
 
@@ -140,7 +141,7 @@ namespace NodeTreeEditor.Contents
         {
             if (window.linkKeep == this)
             {
-				EditorUtility.DisplayDialog("Error", "[エラー]同じノードでループ出来ません。", "OK");
+                EditorUtility.DisplayDialog("Error", "[エラー]同じノードでループ出来ません。", "OK");
                 return;
             }
             window.linkKeep.ConnectClient(this);
@@ -189,11 +190,11 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-			Handles.DrawSolidRectangleWithOutline (new Vector3[]{(f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP}, color, color);
+            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
 
             Handles.color = Color.black;
         }
-#endif
+        #endif
     }
 }

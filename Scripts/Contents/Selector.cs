@@ -4,9 +4,10 @@ using System.Collections.Generic;
 
 using NodeTreeEditor.Variables;
 using NodeTreeEditor.Utils;
-using NodeTreeEditor.Window;
 
 #if UNITY_EDITOR
+using NodeTreeEditor.Window;
+
 using UnityEditor;
 #endif
 
@@ -31,7 +32,8 @@ namespace NodeTreeEditor.Contents
             }
             foreach (Conditions cond in list)
             {
-                if (cond.next == null) continue;
+                if (cond.next == null)
+                    continue;
                 if (cond.DoConditions())
                 {
                     yield return cond.next.Invoke();
@@ -46,7 +48,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-#if UNITY_EDITOR
+        #if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -111,11 +113,12 @@ namespace NodeTreeEditor.Contents
                                         var i = 0;
                                         foreach (Value v in values)
                                         {
-                                            menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList(){
-                                            "A",
-                                            cond,
-                                            v
-                                        });
+                                            menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList()
+                                                {
+                                                    "A",
+                                                    cond,
+                                                    v
+                                                });
                                             i++;
                                         }
                                         menu.ShowAsContext();
@@ -143,11 +146,12 @@ namespace NodeTreeEditor.Contents
                             var i = 0;
                             foreach (Value v in values)
                             {
-                                menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList(){
-                                    "B",
-                                    cond,
-                                    v
-                                });
+                                menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList()
+                                    {
+                                        "B",
+                                        cond,
+                                        v
+                                    });
                                 i++;
                             }
                             menu.ShowAsContext();
@@ -278,11 +282,12 @@ namespace NodeTreeEditor.Contents
 
             foreach (Conditions cond in list)
             {
-                menu.AddItem(new GUIContent("Condition " + (c + 1)), false, GDConnect, new ArrayList() {
-                    c,
-                    content,
-                    cond
-                });
+                menu.AddItem(new GUIContent("Condition " + (c + 1)), false, GDConnect, new ArrayList()
+                    {
+                        c,
+                        content,
+                        cond
+                    });
                 c++;
             }
             menu.ShowAsContext();
@@ -339,12 +344,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
             
-			Handles.DrawSolidRectangleWithOutline (new Vector3[]{(f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP}, color, color);
+            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
-			GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Cond" + index);
+            GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Cond" + index);
 
             Handles.color = Color.black;
         }
-#endif
+        #endif
     }
 }
