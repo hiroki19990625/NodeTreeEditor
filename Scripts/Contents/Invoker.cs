@@ -56,7 +56,7 @@ namespace NodeTreeEditor.Contents
                             EditorGUILayout.Space();
                             i.classTargetName = EditorGUILayout.TextField("ターゲットクラス", i.classTargetName);
 
-                            i.target = (MethodInvoker.Target)EditorGUILayout.EnumPopup("テンプレート", i.target);
+                            i.target = (MethodInvoker.Target) EditorGUILayout.EnumPopup("テンプレート", i.target);
                             if (i.target == MethodInvoker.Target.System)
                             {
                                 i.classTargetName = "System.Object";
@@ -130,6 +130,24 @@ namespace NodeTreeEditor.Contents
                             i.invokeObject = EditorGUILayout.ObjectField(i.invokeObject, typeof(Object), true);
                             if (i.invokeObject != null)
                             {
+                                if (i.invokeObject is GameObject)
+                                {
+                                    if (GUILayout.Button("Componentを選択"))
+                                    {
+                                        GenericMenu menu = new GenericMenu();
+                                        Component[] comps = ((GameObject) i.invokeObject).GetComponents<Component>();
+                                        foreach (Component c in comps)
+                                        {
+                                            menu.AddItem(new GUIContent(c.GetType().Name + "<" + c.GetInstanceID() + ">"), false, (object o) =>
+                                            {
+                                                i.invokeObject = (Component) o;
+                                            }, c);
+                                        }
+
+                                        menu.ShowAsContext();
+                                    }
+                                }
+
                                 EditorGUILayout.Space();
                                 if (GUILayout.Button("メソッドを選択"))
                                 {
@@ -200,18 +218,18 @@ namespace NodeTreeEditor.Contents
 
         void ClassSelect(object obj)
         {
-            var l = (ArrayList)obj;
-            var i = (MethodInvoker)l[0];
-            var s = (string)l[1];
+            var l = (ArrayList) obj;
+            var i = (MethodInvoker) l[0];
+            var s = (string) l[1];
             i.classType = s;
         }
 
         void MethodSelect(object obj)
         {
-            var l = (ArrayList)obj;
-            var i = (MethodInvoker)l[0];
-            var s = (string)l[1];
-            var p = (System.Reflection.ParameterInfo[])l[2];
+            var l = (ArrayList) obj;
+            var i = (MethodInvoker) l[0];
+            var s = (string) l[1];
+            var p = (System.Reflection.ParameterInfo[]) l[2];
             i.ClearParameter();
             i.selectedMethod = s;
             foreach (var pp in p)

@@ -10,7 +10,6 @@ namespace NodeTreeEditor
     [RequireComponent(typeof(Start), typeof(End)), AddComponentMenu("NodeTreeEditor/EventTrigger/Trigger")]
     public class Trigger : MonoBehaviour
     {
-
         public enum TriggerType
         {
             Start,
@@ -20,6 +19,9 @@ namespace NodeTreeEditor
         }//TODO Add OtherType
 
         public Rect nodeEditorSize = new Rect(0, 0, 2000, 2000);
+
+        public int windowX = 320;
+        public int windowY = 150;
 
         public TriggerType triggerType;
         public GameObject target;

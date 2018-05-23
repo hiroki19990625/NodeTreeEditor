@@ -20,12 +20,6 @@ namespace NodeTreeEditor.Window
         const int Editor = 0;
         const int LocalVariable = 1;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        const int windowX = 320;
-        const int windowY = 150;
-
         public static readonly Rect windowSize = new Rect(0, 0, 800, 700);
 
         public delegate void NodeEditor_Contents_GenericMenuOpenHandler(Trigger tgr, GenericMenu menu);
@@ -276,8 +270,8 @@ namespace NodeTreeEditor.Window
         void DrawContent(Content content)
         {
             var r = content.GetRect();
-            r.width = windowX;
-            r.height = windowY;
+            r.width = target.windowX;
+            r.height = target.windowY;
 
             content.LineDraw();
 
@@ -326,17 +320,17 @@ namespace NodeTreeEditor.Window
             {
                 rect.position = new Vector2(0, rect.y);
             }
-            else if (rect.x >= target.nodeEditorSize.width - windowX)
+            else if (rect.x >= target.nodeEditorSize.width - target.windowX)
             {
-                rect.position = new Vector2(target.nodeEditorSize.width - windowX, rect.y);
+                rect.position = new Vector2(target.nodeEditorSize.width - target.windowX, rect.y);
             }
             if (rect.y <= 0)
             {
                 rect.position = new Vector2(rect.x, 0);
             }
-            else if (rect.y >= target.nodeEditorSize.height - windowY)
+            else if (rect.y >= target.nodeEditorSize.height - target.windowY)
             {
-                rect.position = new Vector2(rect.x, target.nodeEditorSize.height - windowY);
+                rect.position = new Vector2(rect.x, target.nodeEditorSize.height - target.windowY);
             }
 
             rect.position = new Vector2(Mathf.Round(rect.x / 20) * 20, Mathf.Round(rect.y / 20) * 20);
