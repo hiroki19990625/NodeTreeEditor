@@ -35,8 +35,6 @@ namespace NodeTreeEditor.Window
         public static event NodeEditor_Contents_GenericMenuOpenHandler Contents_GenericMenuOpen;
         public static event NodeEditor_Variable_GenericMenuOpenHandler Variable_GenericMenuOpen;
 
-        public readonly Rect nodeEditorSize = new Rect(0, 0, 2000, 2000);
-
         public Vector2 scrollView;
         public Vector2 scrollView2;
         public int page = 0;
@@ -138,7 +136,7 @@ namespace NodeTreeEditor.Window
             GUI.Box(new Rect(0, 40, this.position.width, this.position.height - 40), "");
 
             Rect view = new Rect(0, 40, this.position.width, this.position.height - 40);
-            scrollView = GUI.BeginScrollView(view, scrollView, nodeEditorSize);
+            scrollView = GUI.BeginScrollView(view, scrollView, target.nodeEditorSize);
             {
                 var ev = Event.current;
                 if (ev.type == EventType.ContextClick)
@@ -150,13 +148,8 @@ namespace NodeTreeEditor.Window
                     ev.Use();
                 }
 
-                if (ev.type == EventType.MouseDrag)
-                {
-                    if (!nodeEditorSize.Contains(ev.mousePosition))
-                    {
-                        scrollView += ev.delta;
-                    }
-                }
+                //TODO: Drag Event...
+
                 DrawNodes();
             }
             GUI.EndScrollView();
@@ -333,17 +326,17 @@ namespace NodeTreeEditor.Window
             {
                 rect.position = new Vector2(0, rect.y);
             }
-            else if (rect.x >= nodeEditorSize.width - windowX)
+            else if (rect.x >= target.nodeEditorSize.width - windowX)
             {
-                rect.position = new Vector2(nodeEditorSize.width - windowX, rect.y);
+                rect.position = new Vector2(target.nodeEditorSize.width - windowX, rect.y);
             }
             if (rect.y <= 0)
             {
                 rect.position = new Vector2(rect.x, 0);
             }
-            else if (rect.y >= nodeEditorSize.height - windowY)
+            else if (rect.y >= target.nodeEditorSize.height - windowY)
             {
-                rect.position = new Vector2(rect.x, nodeEditorSize.height - windowY);
+                rect.position = new Vector2(rect.x, target.nodeEditorSize.height - windowY);
             }
 
             rect.position = new Vector2(Mathf.Round(rect.x / 20) * 20, Mathf.Round(rect.y / 20) * 20);

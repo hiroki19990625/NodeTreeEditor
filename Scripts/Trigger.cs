@@ -19,6 +19,8 @@ namespace NodeTreeEditor
             Self
         }//TODO Add OtherType
 
+        public Rect nodeEditorSize = new Rect(0, 0, 2000, 2000);
+
         public TriggerType triggerType;
         public GameObject target;
 
