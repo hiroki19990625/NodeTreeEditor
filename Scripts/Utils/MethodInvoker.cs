@@ -242,7 +242,7 @@ namespace NodeTreeEditor.Utils
                 return type;
             }
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
 
             public void ShowField()
             {
@@ -254,11 +254,11 @@ namespace NodeTreeEditor.Utils
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value)EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
                             if (variable is BoolValue)
                             {
-                                var conv = (BoolValue)variable;
-                                v_bool = (bool)conv.GetValue();
+                                var conv = (BoolValue) variable;
+                                v_bool = (bool) conv.GetValue();
                                 EditorGUILayout.HelpBox(v_bool + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
                             }
                             else if (variable == null)
@@ -288,11 +288,11 @@ namespace NodeTreeEditor.Utils
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value)EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
                             if (variable is FloatValue)
                             {
-                                var conv = (FloatValue)variable;
-                                v_float = (float)conv.GetValue();
+                                var conv = (FloatValue) variable;
+                                v_float = (float) conv.GetValue();
                                 EditorGUILayout.HelpBox(v_float + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
                             }
                             else if (variable == null)
@@ -314,11 +314,11 @@ namespace NodeTreeEditor.Utils
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value)EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
                             if (variable is IntValue)
                             {
-                                var conv = (IntValue)variable;
-                                v_int = (int)conv.GetValue();
+                                var conv = (IntValue) variable;
+                                v_int = (int) conv.GetValue();
                                 EditorGUILayout.HelpBox(v_int + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
                             }
                             else if (variable == null)
@@ -341,7 +341,7 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.MonoBehaviour:
-                        v_MonoBehaviour = (MonoBehaviour)EditorGUILayout.ObjectField(parameterName, v_MonoBehaviour, typeof(MonoBehaviour), true);
+                        v_MonoBehaviour = (MonoBehaviour) EditorGUILayout.ObjectField(parameterName, v_MonoBehaviour, typeof(MonoBehaviour), true);
                         break;
 
                     case ParameterType.Object:
@@ -356,11 +356,11 @@ namespace NodeTreeEditor.Utils
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value)EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
                             if (variable is StringValue)
                             {
-                                var conv = (StringValue)variable;
-                                v_string = (string)conv.GetValue();
+                                var conv = (StringValue) variable;
+                                v_string = (string) conv.GetValue();
                                 EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
                             }
                             else if (variable == null)
@@ -380,7 +380,7 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.Transform:
-                        v_transform = (Transform)EditorGUILayout.ObjectField(parameterName, v_transform, typeof(Transform), true);
+                        v_transform = (Transform) EditorGUILayout.ObjectField(parameterName, v_transform, typeof(Transform), true);
                         break;
 
                     case ParameterType.Vector2:
@@ -394,7 +394,7 @@ namespace NodeTreeEditor.Utils
                 EditorGUILayout.EndVertical();
             }
 
-            #endif
+#endif
         }
 
         public enum Target
@@ -430,7 +430,7 @@ namespace NodeTreeEditor.Utils
                 {
                     if (m.ReturnType.Name == "IEnumerator")
                     {
-                        yield return mono.StartCoroutine((IEnumerator)m.Invoke(null, objs.ToArray()));
+                        yield return mono.StartCoroutine((IEnumerator) m.Invoke(null, objs.ToArray()));
                     }
                     else
                     {
@@ -441,7 +441,7 @@ namespace NodeTreeEditor.Utils
                 {
                     if (m.ReturnType.Name == "IEnumerator")
                     {
-                        yield return mono.StartCoroutine((IEnumerator)m.Invoke(invokeObject, objs.ToArray()));
+                        yield return mono.StartCoroutine((IEnumerator) m.Invoke(invokeObject, objs.ToArray()));
                     }
                     else
                     {

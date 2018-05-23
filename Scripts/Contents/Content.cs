@@ -54,7 +54,7 @@ namespace NodeTreeEditor.Contents
 
         public Content Copy()
         {
-            return (Content)MemberwiseClone();
+            return (Content) MemberwiseClone();
         }
 
         public List<Value> GetVariables()
@@ -69,7 +69,7 @@ namespace NodeTreeEditor.Contents
             Debug.Log(obj);
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public abstract string GetDescription();
 
@@ -190,11 +190,11 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
 
             Handles.color = Color.black;
         }
-        #endif
+#endif
     }
 }

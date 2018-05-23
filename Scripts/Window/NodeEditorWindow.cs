@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
-using NodeTreeEditor;
 using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
 
@@ -30,9 +28,9 @@ namespace NodeTreeEditor.Window
 
         public static readonly Rect windowSize = new Rect(0, 0, 800, 700);
 
-        public delegate void NodeEditor_Contents_GenericMenuOpenHandler(Trigger tgr,GenericMenu menu);
+        public delegate void NodeEditor_Contents_GenericMenuOpenHandler(Trigger tgr, GenericMenu menu);
 
-        public delegate void NodeEditor_Variable_GenericMenuOpenHandler(Trigger tgr,GenericMenu menu);
+        public delegate void NodeEditor_Variable_GenericMenuOpenHandler(Trigger tgr, GenericMenu menu);
 
         public static event NodeEditor_Contents_GenericMenuOpenHandler Contents_GenericMenuOpen;
         public static event NodeEditor_Variable_GenericMenuOpenHandler Variable_GenericMenuOpen;
@@ -59,6 +57,12 @@ namespace NodeTreeEditor.Window
             GetWindowWithRect<NodeEditorWindow>(windowSize);
         }
 
+        public static void Open(Trigger trigger)
+        {
+            NodeEditorWindow w = GetWindowWithRect<NodeEditorWindow>(windowSize);
+            w.target = trigger;
+        }
+
         public static void OnVariable_GenericMenuOpen(Trigger tgr, GenericMenu menu)
         {
             if (Variable_GenericMenuOpen != null)
@@ -77,7 +81,7 @@ namespace NodeTreeEditor.Window
 
         void OnGUI()
         {
-            target = (Trigger)EditorGUILayout.ObjectField("Trigger", target, typeof(Trigger), true);
+            target = (Trigger) EditorGUILayout.ObjectField("Trigger", target, typeof(Trigger), true);
             if (target == null)
             {
                 EditorGUILayout.HelpBox("Triggerを設定して下さい。", MessageType.Error);
@@ -146,13 +150,13 @@ namespace NodeTreeEditor.Window
                     ev.Use();
                 }
 
-                /*if (ev.type == EventType.MouseDrag)
+                if (ev.type == EventType.MouseDrag)
                 {
                     if (!nodeEditorSize.Contains(ev.mousePosition))
                     {
                         scrollView += ev.delta;
                     }
-                }*/
+                }
                 DrawNodes();
             }
             GUI.EndScrollView();
@@ -160,7 +164,7 @@ namespace NodeTreeEditor.Window
 
         void LocalVariableDraw()
         {
-            var local = target.transform.FindChild("LocalVariable");
+            var local = target.transform.Find("LocalVariable");
             if (local == null)
             {
                 var obj = new GameObject("LocalVariable");
@@ -182,21 +186,25 @@ namespace NodeTreeEditor.Window
                 menu.AddItem(new GUIContent("Add IntValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<IntValue>();
+                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Int;
                     });
                 menu.AddItem(new GUIContent("Add FloatValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<FloatValue>();
+                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Float;
                     });
                 menu.AddItem(new GUIContent("Add BoolValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<BoolValue>();
+                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Bool;
                     });
                 menu.AddItem(new GUIContent("Add StringValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<StringValue>();
+                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.String;
                     });
                 OnVariable_GenericMenuOpen(target, menu);
@@ -217,22 +225,22 @@ namespace NodeTreeEditor.Window
                         switch (v.valueType)
                         {
                             case Value.ValueType.Int:
-                                var t1 = (IntValue)v;
+                                var t1 = (IntValue) v;
                                 t1.value = EditorGUILayout.IntField("値(int)", t1.value);
                                 break;
 
                             case Value.ValueType.Float:
-                                var t2 = (FloatValue)v;
+                                var t2 = (FloatValue) v;
                                 t2.value = EditorGUILayout.FloatField("値(float)", t2.value);
                                 break;
 
                             case Value.ValueType.Bool:
-                                var t3 = (BoolValue)v;
+                                var t3 = (BoolValue) v;
                                 t3.value = EditorGUILayout.Toggle("値(bool)", t3.value);
                                 break;
 
                             case Value.ValueType.String:
-                                var t4 = (StringValue)v;
+                                var t4 = (StringValue) v;
                                 t4.value = EditorGUILayout.TextField("値(string)", t4.value);
                                 break;
                         }
@@ -406,11 +414,12 @@ namespace NodeTreeEditor.Window
         //Del
         void AddData(object obj)
         {
-            var list = (ArrayList)obj;
-            var pos = (Vector2)list[0];
-            var sType = (System.Type)list[1];
+            var list = (ArrayList) obj;
+            var pos = (Vector2) list[0];
+            var sType = (System.Type) list[1];
 
-            var cn = (Content)target.gameObject.AddComponent(sType);
+            var cn = (Content) target.gameObject.AddComponent(sType);
+            cn.hideFlags = HideFlags.HideInInspector;
             cn.SetRect(new Rect(pos, Vector2.zero));
         }
     }

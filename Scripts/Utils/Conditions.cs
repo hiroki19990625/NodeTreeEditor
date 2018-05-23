@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections;
-
+﻿
 using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
 
@@ -56,8 +54,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value == t2.value)
                                 {
@@ -66,8 +64,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value == t2.value)
                                 {
@@ -76,8 +74,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Bool)
                             {
-                                var t1 = (BoolValue)valueA;
-                                var t2 = (BoolValue)valueB;
+                                var t1 = (BoolValue) valueA;
+                                var t2 = (BoolValue) valueB;
 
                                 if (t1.value == t2.value)
                                 {
@@ -86,8 +84,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.String)
                             {
-                                var t1 = (StringValue)valueA;
-                                var t2 = (StringValue)valueB;
+                                var t1 = (StringValue) valueA;
+                                var t2 = (StringValue) valueB;
 
                                 if (t1.value == t2.value)
                                 {
@@ -100,7 +98,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt == t2.value)
                             {
@@ -109,7 +107,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat == t2.value)
                             {
@@ -118,7 +116,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Bool)
                         {
-                            var t2 = (BoolValue)valueB;
+                            var t2 = (BoolValue) valueB;
 
                             if (rawBool == t2.value)
                             {
@@ -127,7 +125,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.String)
                         {
-                            var t2 = (StringValue)valueB;
+                            var t2 = (StringValue) valueB;
 
                             if (rawString == t2.value)
                             {
@@ -144,8 +142,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value != t2.value)
                                 {
@@ -154,8 +152,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value != t2.value)
                                 {
@@ -164,8 +162,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Bool)
                             {
-                                var t1 = (BoolValue)valueA;
-                                var t2 = (BoolValue)valueB;
+                                var t1 = (BoolValue) valueA;
+                                var t2 = (BoolValue) valueB;
 
                                 if (t1.value != t2.value)
                                 {
@@ -174,8 +172,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.String)
                             {
-                                var t1 = (StringValue)valueA;
-                                var t2 = (StringValue)valueB;
+                                var t1 = (StringValue) valueA;
+                                var t2 = (StringValue) valueB;
 
                                 if (t1.value != t2.value)
                                 {
@@ -188,7 +186,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt != t2.value)
                             {
@@ -197,7 +195,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat != t2.value)
                             {
@@ -206,7 +204,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Bool)
                         {
-                            var t2 = (BoolValue)valueB;
+                            var t2 = (BoolValue) valueB;
 
                             if (rawBool != t2.value)
                             {
@@ -215,7 +213,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.String)
                         {
-                            var t2 = (StringValue)valueB;
+                            var t2 = (StringValue) valueB;
 
                             if (rawString != t2.value)
                             {
@@ -232,8 +230,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value > t2.value)
                                 {
@@ -242,8 +240,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value > t2.value)
                                 {
@@ -256,7 +254,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt > t2.value)
                             {
@@ -265,7 +263,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat > t2.value)
                             {
@@ -282,8 +280,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value >= t2.value)
                                 {
@@ -292,8 +290,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value >= t2.value)
                                 {
@@ -306,7 +304,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt >= t2.value)
                             {
@@ -315,7 +313,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat >= t2.value)
                             {
@@ -332,8 +330,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value < t2.value)
                                 {
@@ -342,8 +340,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value < t2.value)
                                 {
@@ -356,7 +354,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt < t2.value)
                             {
@@ -365,7 +363,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat < t2.value)
                             {
@@ -382,8 +380,8 @@ namespace NodeTreeEditor.Utils
                         {
                             if (valueA.valueType == Value.ValueType.Int)
                             {
-                                var t1 = (IntValue)valueA;
-                                var t2 = (IntValue)valueB;
+                                var t1 = (IntValue) valueA;
+                                var t2 = (IntValue) valueB;
 
                                 if (t1.value <= t2.value)
                                 {
@@ -392,8 +390,8 @@ namespace NodeTreeEditor.Utils
                             }
                             else if (valueA.valueType == Value.ValueType.Float)
                             {
-                                var t1 = (FloatValue)valueA;
-                                var t2 = (FloatValue)valueB;
+                                var t1 = (FloatValue) valueA;
+                                var t2 = (FloatValue) valueB;
 
                                 if (t1.value <= t2.value)
                                 {
@@ -406,7 +404,7 @@ namespace NodeTreeEditor.Utils
                     {
                         if (SysTypeA == Value.ValueType.Int)
                         {
-                            var t2 = (IntValue)valueB;
+                            var t2 = (IntValue) valueB;
 
                             if (rawInt <= t2.value)
                             {
@@ -415,7 +413,7 @@ namespace NodeTreeEditor.Utils
                         }
                         else if (SysTypeA == Value.ValueType.Float)
                         {
-                            var t2 = (FloatValue)valueB;
+                            var t2 = (FloatValue) valueB;
 
                             if (rawFloat <= t2.value)
                             {

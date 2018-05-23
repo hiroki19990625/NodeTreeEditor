@@ -1,7 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-
-using NodeTreeEditor.Contents;
+﻿using NodeTreeEditor.Contents;
+using UnityEngine;
 
 
 namespace NodeTreeEditor
@@ -24,11 +22,14 @@ namespace NodeTreeEditor
         public TriggerType triggerType;
         public GameObject target;
 
+        [HideInInspector]
         public Start startContent;
 
         // Use this for initialization
         void Start()
         {
+            startContent = GetComponent<Start>();
+
             if (triggerType == TriggerType.Start)
             {
                 StartCoroutine(startContent.Invoke());

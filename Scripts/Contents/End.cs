@@ -3,8 +3,6 @@ using System.Collections;
 
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
-using UnityEditor;
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -19,16 +17,15 @@ namespace NodeTreeEditor.Contents
         public End()
         {
             commonName = "End";
-            position = new Rect(300, 0, 0, 0);
+            position = new Rect(400, 0, 0, 0);
         }
 
         public override IEnumerator Invoke()
         {
-            Debug.Log("end");
             yield return null;
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -56,6 +53,6 @@ namespace NodeTreeEditor.Contents
                 }
             }
         }
-        #endif
+#endif
     }
 }

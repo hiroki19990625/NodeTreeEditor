@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 #if UNITY_EDITOR
-using NodeTreeEditor.Window;
 
-using UnityEditor;
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -20,7 +18,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -36,6 +34,6 @@ namespace NodeTreeEditor.Contents
         {
             return new Color32(60, 130, 130, 255);
         }
-        #endif
+#endif
     }
 }

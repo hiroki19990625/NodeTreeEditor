@@ -28,7 +28,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -71,7 +71,7 @@ namespace NodeTreeEditor.Contents
                 }
             }
         }
-        #endif
+#endif
     }
 }
 

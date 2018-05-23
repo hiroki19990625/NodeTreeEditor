@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
 
 using NodeTreeEditor.Utils;
 
@@ -43,7 +42,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -191,14 +190,14 @@ namespace NodeTreeEditor.Contents
 
         void GDOther(object obj)
         {
-            next = (Content)obj;
+            next = (Content) obj;
         }
 
         void GDConnect(object obj)
         {
-            var al = (ArrayList)obj;
-            var index = (int)al[0];
-            var content = (Content)al[1];
+            var al = (ArrayList) obj;
+            var index = (int) al[0];
+            var content = (Content) al[1];
 
             tree.treenodes[index].next = content;
         }
@@ -240,12 +239,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
             GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Node" + index);
 
             Handles.color = Color.black;
         }
-        #endif
+#endif
     }
 }

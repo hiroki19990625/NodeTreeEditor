@@ -48,7 +48,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -72,14 +72,14 @@ namespace NodeTreeEditor.Contents
                     GUILayout.BeginVertical(GUI.skin.box);
                     {
                         EditorGUILayout.LabelField("Condition " + (c + 1));
-                        cond.type = (Conditions.CondType)EditorGUILayout.EnumPopup("条件", cond.type);
+                        cond.type = (Conditions.CondType) EditorGUILayout.EnumPopup("条件", cond.type);
                         EditorGUILayout.Space();
-                        cond.valueTypeA = (Conditions.ValueType)EditorGUILayout.EnumPopup("値A の 種類", cond.valueTypeA);
+                        cond.valueTypeA = (Conditions.ValueType) EditorGUILayout.EnumPopup("値A の 種類", cond.valueTypeA);
                         switch (cond.valueTypeA)
                         {
 
                             case Conditions.ValueType.Raw:
-                                cond.SysTypeA = (Value.ValueType)EditorGUILayout.EnumPopup("値A　の タイプ", cond.SysTypeA);
+                                cond.SysTypeA = (Value.ValueType) EditorGUILayout.EnumPopup("値A　の タイプ", cond.SysTypeA);
 
                                 switch (cond.SysTypeA)
                                 {
@@ -105,7 +105,7 @@ namespace NodeTreeEditor.Contents
                             case Conditions.ValueType.Variable:
                                 if (GUILayout.Button("Select ValueA"))
                                 {
-                                    var n = gameObject.transform.FindChild("LocalVariable");
+                                    var n = gameObject.transform.Find("LocalVariable");
                                     if (n != null)
                                     {
                                         var values = n.gameObject.GetComponents<Value>();
@@ -138,7 +138,7 @@ namespace NodeTreeEditor.Contents
 
                     if (GUILayout.Button("Select ValueB"))
                     {
-                        var n = gameObject.transform.FindChild("LocalVariable");
+                        var n = gameObject.transform.Find("LocalVariable");
                         if (n != null)
                         {
                             var values = n.gameObject.GetComponents<Value>();
@@ -205,17 +205,17 @@ namespace NodeTreeEditor.Contents
 
         void GenClickDel(object obj)
         {
-            var l = (ArrayList)obj;
-            var cmd = (string)l[0];
+            var l = (ArrayList) obj;
+            var cmd = (string) l[0];
             if (cmd == "A")
             {
-                var cond = (Conditions)l[1];
-                cond.valueA = (Value)l[2];
+                var cond = (Conditions) l[1];
+                cond.valueA = (Value) l[2];
             }
             else
             {
-                var cond = (Conditions)l[1];
-                cond.valueB = (Value)l[2];
+                var cond = (Conditions) l[1];
+                cond.valueB = (Value) l[2];
             }
         }
 
@@ -295,14 +295,14 @@ namespace NodeTreeEditor.Contents
 
         void GDOther(object obj)
         {
-            next = (Content)obj;
+            next = (Content) obj;
         }
 
         void GDConnect(object obj)
         {
-            var al = (ArrayList)obj;
-            var index = (int)al[0];
-            var content = (Content)al[1];
+            var al = (ArrayList) obj;
+            var index = (int) al[0];
+            var content = (Content) al[1];
 
             list[index].next = content;
         }
@@ -343,13 +343,13 @@ namespace NodeTreeEditor.Contents
             Vector3 centerP = new Vector3((startPos.x + endPos.x) / 2, (startPos.y + endPos.y) / 2, 0);
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
-            
-            Handles.DrawSolidRectangleWithOutline(new Vector3[]{ (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+
+            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
             GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Cond" + index);
 
             Handles.color = Color.black;
         }
-        #endif
+#endif
     }
 }

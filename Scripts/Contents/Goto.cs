@@ -31,7 +31,7 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
 
         public override string GetDescription()
         {
@@ -79,6 +79,6 @@ namespace NodeTreeEditor.Contents
         {
             return new Color32(255, 100, 65, 255);
         }
-        #endif
+#endif
     }
 }
