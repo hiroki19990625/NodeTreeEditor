@@ -173,25 +173,21 @@ namespace NodeTreeEditor.Window
                 menu.AddItem(new GUIContent("Add IntValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<IntValue>();
-                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Int;
                     });
                 menu.AddItem(new GUIContent("Add FloatValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<FloatValue>();
-                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Float;
                     });
                 menu.AddItem(new GUIContent("Add BoolValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<BoolValue>();
-                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.Bool;
                     });
                 menu.AddItem(new GUIContent("Add StringValue"), false, () =>
                     {
                         var c = local.gameObject.AddComponent<StringValue>();
-                        c.hideFlags = HideFlags.HideInInspector;
                         c.valueType = Value.ValueType.String;
                     });
                 OnVariable_GenericMenuOpen(target, menu);

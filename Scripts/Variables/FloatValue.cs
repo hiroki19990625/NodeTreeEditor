@@ -23,7 +23,7 @@ namespace NodeTreeEditor.Variables
 
         public void AddValue(float v)
         {
-            value = v;
+            value += v;
         }
 
         public void SetReverseValue()
