@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -15,9 +14,7 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Goto")]
     public class Goto : Content
     {
-
-        [HideInInspector]
-        public string gotoLabel = "Label";
+        [HideInInspector] public string gotoLabel = "Label";
 
         public override IEnumerator Invoke()
         {
@@ -28,6 +25,7 @@ namespace NodeTreeEditor.Contents
                     next = label;
                 }
             }
+
             yield return next.Invoke();
         }
 

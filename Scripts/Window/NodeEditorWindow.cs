@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
-
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -16,7 +15,6 @@ namespace NodeTreeEditor.Window
     /// </summary>
     public class NodeEditorWindow : EditorWindow
     {
-
         const int Editor = 0;
         const int LocalVariable = 1;
 
@@ -171,25 +169,45 @@ namespace NodeTreeEditor.Window
             {
                 var menu = new GenericMenu();
                 menu.AddItem(new GUIContent("Add IntValue"), false, () =>
-                    {
-                        var c = local.gameObject.AddComponent<IntValue>();
-                        c.valueType = Value.ValueType.Int;
-                    });
+                {
+                    var c = local.gameObject.AddComponent<IntValue>();
+                    c.valueType = Value.ValueType.Int;
+                });
                 menu.AddItem(new GUIContent("Add FloatValue"), false, () =>
-                    {
-                        var c = local.gameObject.AddComponent<FloatValue>();
-                        c.valueType = Value.ValueType.Float;
-                    });
+                {
+                    var c = local.gameObject.AddComponent<FloatValue>();
+                    c.valueType = Value.ValueType.Float;
+                });
                 menu.AddItem(new GUIContent("Add BoolValue"), false, () =>
-                    {
-                        var c = local.gameObject.AddComponent<BoolValue>();
-                        c.valueType = Value.ValueType.Bool;
-                    });
+                {
+                    var c = local.gameObject.AddComponent<BoolValue>();
+                    c.valueType = Value.ValueType.Bool;
+                });
                 menu.AddItem(new GUIContent("Add StringValue"), false, () =>
-                    {
-                        var c = local.gameObject.AddComponent<StringValue>();
-                        c.valueType = Value.ValueType.String;
-                    });
+                {
+                    var c = local.gameObject.AddComponent<StringValue>();
+                    c.valueType = Value.ValueType.String;
+                });
+                menu.AddItem(new GUIContent("Add ObjectValue"), false, () =>
+                {
+                    var c = local.gameObject.AddComponent<ObjectValue>();
+                    c.valueType = Value.ValueType.Object;
+                });
+                menu.AddItem(new GUIContent("Add Vector2Value"), false, () =>
+                {
+                    var c = local.gameObject.AddComponent<Vector2Value>();
+                    c.valueType = Value.ValueType.Vector2;
+                });
+                menu.AddItem(new GUIContent("Add Vector3Value"), false, () =>
+                {
+                    var c = local.gameObject.AddComponent<Vector3Value>();
+                    c.valueType = Value.ValueType.Vector3;
+                });
+                menu.AddItem(new GUIContent("Add Vector4Value"), false, () =>
+                {
+                    var c = local.gameObject.AddComponent<Vector4Value>();
+                    c.valueType = Value.ValueType.Vector4;
+                });
                 OnVariable_GenericMenuOpen(target, menu);
                 menu.ShowAsContext();
             }
@@ -226,7 +244,29 @@ namespace NodeTreeEditor.Window
                                 var t4 = (StringValue) v;
                                 t4.value = EditorGUILayout.TextField("値(string)", t4.value);
                                 break;
+
+                            case Value.ValueType.Object:
+                                var t5 = (ObjectValue) v;
+                                t5.value = EditorGUILayout.ObjectField("値(UnityEngine.Object)", t5.value,
+                                    typeof(Object), true);
+                                break;
+
+                            case Value.ValueType.Vector2:
+                                var t7 = (Vector2Value) v;
+                                t7.value = EditorGUILayout.Vector2Field("値(Vector2)", t7.value);
+                                break;
+
+                            case Value.ValueType.Vector3:
+                                var t8 = (Vector3Value) v;
+                                t8.value = EditorGUILayout.Vector3Field("値(Vector3)", t8.value);
+                                break;
+
+                            case Value.ValueType.Vector4:
+                                var t9 = (Vector4Value) v;
+                                t9.value = EditorGUILayout.Vector4Field("値(Vector4)", t9.value);
+                                break;
                         }
+
                         if (GUILayout.Button("削除"))
                         {
                             if (EditorUtility.DisplayDialog("Warning", "この変数を削除しますか?", "OK", "キャンセル"))
@@ -237,6 +277,7 @@ namespace NodeTreeEditor.Window
                     }
                     GUILayout.EndVertical();
                 }
+
                 if (removeV != null)
                 {
                     DestroyImmediate(removeV);
@@ -320,6 +361,7 @@ namespace NodeTreeEditor.Window
             {
                 rect.position = new Vector2(target.nodeEditorSize.width - target.windowX, rect.y);
             }
+
             if (rect.y <= 0)
             {
                 rect.position = new Vector2(rect.x, 0);
@@ -342,55 +384,55 @@ namespace NodeTreeEditor.Window
         void RegisterMenuAll(GenericMenu menu, Vector2 pos)
         {
             menu.AddItem(new GUIContent("Add Selector"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Selector)
-                });
+            {
+                pos,
+                typeof(Selector)
+            });
             menu.AddItem(new GUIContent("Add RandomSelector"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(RandomSelector)
-                });
+            {
+                pos,
+                typeof(RandomSelector)
+            });
             menu.AddItem(new GUIContent("Add Setter"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Setter)
-                });
+            {
+                pos,
+                typeof(Setter)
+            });
             menu.AddItem(new GUIContent("Add Invoker"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Invoker)
-                });
+            {
+                pos,
+                typeof(Invoker)
+            });
             menu.AddItem(new GUIContent("Add Async"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Async)
-                });
+            {
+                pos,
+                typeof(Async)
+            });
             menu.AddItem(new GUIContent("Add Delay"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Delay)
-                });
+            {
+                pos,
+                typeof(Delay)
+            });
             menu.AddItem(new GUIContent("Add Sync"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Sync)
-                });
+            {
+                pos,
+                typeof(Sync)
+            });
             menu.AddItem(new GUIContent("Add Branch"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Branch)
-                });
+            {
+                pos,
+                typeof(Branch)
+            });
             menu.AddItem(new GUIContent("Add Label"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Label)
-                });
+            {
+                pos,
+                typeof(Label)
+            });
             menu.AddItem(new GUIContent("Add Goto"), false, AddData, new ArrayList()
-                {
-                    pos,
-                    typeof(Goto)
-                });
+            {
+                pos,
+                typeof(Goto)
+            });
             OnContents_GenericMenuOpen(target, menu);
         }
 

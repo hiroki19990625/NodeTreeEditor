@@ -8,13 +8,16 @@ namespace NodeTreeEditor.Variables
     /// </summary>
     public abstract class Value : MonoBehaviour
     {
-
         public enum ValueType
         {
             Int,
             Float,
             Bool,
-            String
+            Vector2,
+            Vector3,
+            Vector4,
+            String,
+            Object,
         }
 
         public string valueName = "Variable";
@@ -22,8 +25,7 @@ namespace NodeTreeEditor.Variables
         public bool constValue;
 
         //[Attributes.Disable]
-        [HideInInspector]
-        public ValueType valueType;
+        [HideInInspector] public ValueType valueType;
 
         public abstract object GetValue();
 
@@ -42,9 +44,11 @@ namespace NodeTreeEditor.Variables
                 {
                     continue;
                 }
+
                 obj = v.GetValue();
                 s.Add("<" + v.ToString() + ">" + v.valueName + " => " + obj.ToString() + "");
             }
+
             return s.ToArray();
         }
     }

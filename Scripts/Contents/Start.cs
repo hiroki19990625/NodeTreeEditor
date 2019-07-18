@@ -1,10 +1,9 @@
 using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -15,7 +14,6 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Base/Start")]
     public class Start : Content
     {
-
         public Start()
         {
             commonName = "Start";
@@ -74,4 +72,3 @@ namespace NodeTreeEditor.Contents
 #endif
     }
 }
-

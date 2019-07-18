@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using NodeTreeEditor.Variables;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -17,18 +15,13 @@ namespace NodeTreeEditor.Contents
     /// </summary>
     public abstract class Content : MonoBehaviour
     {
+        [SerializeField] protected string commonName = "Node";
 
-        [SerializeField]
-        protected string commonName = "Node";
+        [SerializeField] protected Rect position;
 
-        [SerializeField]
-        protected Rect position;
+        [HideInInspector] public Vector2 viewPos;
 
-        [HideInInspector]
-        public Vector2 viewPos;
-
-        [HideInInspector]
-        public Content next;
+        [HideInInspector] public Content next;
 
         public abstract IEnumerator Invoke();
 
@@ -85,7 +78,6 @@ namespace NodeTreeEditor.Contents
 
         public virtual void Draw()
         {
-
         }
 
         public virtual void ButtonDraw(NodeEditorWindow window)
@@ -144,6 +136,7 @@ namespace NodeTreeEditor.Contents
                 EditorUtility.DisplayDialog("Error", "[エラー]同じノードでループ出来ません。", "OK");
                 return;
             }
+
             window.linkKeep.ConnectClient(this);
         }
 
@@ -190,7 +183,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+            Handles.DrawSolidRectangleWithOutline(
+                new Vector3[]
+                {
+                    (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP,
+                    (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP
+                }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
 
             Handles.color = Color.black;

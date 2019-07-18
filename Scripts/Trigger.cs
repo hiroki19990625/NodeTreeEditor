@@ -16,6 +16,7 @@ namespace NodeTreeEditor
             OnTriggerExit,
             OnTriggerEnter2D,
             OnTriggerExit2D,
+            OnDestroy,
             Self
         } //TODO Add OtherType
 
@@ -38,11 +39,6 @@ namespace NodeTreeEditor
             {
                 StartCoroutine(startContent.Invoke());
             }
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
         }
 
         public void Self()
@@ -110,6 +106,14 @@ namespace NodeTreeEditor
                 {
                     StartCoroutine(startContent.Invoke());
                 }
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (triggerType == TriggerType.OnDestroy)
+            {
+                StartCoroutine(startContent.Invoke());
             }
         }
     }

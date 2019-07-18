@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -13,11 +13,8 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Delay")]
     public class Delay : Content
     {
-
-        [HideInInspector]
-        public bool isRealTime = false;
-        [HideInInspector]
-        public float time = 0f;
+        [HideInInspector] public bool isRealTime = false;
+        [HideInInspector] public float time = 0f;
 
         public override IEnumerator Invoke()
         {
@@ -29,6 +26,7 @@ namespace NodeTreeEditor.Contents
             {
                 yield return new WaitForSeconds(time);
             }
+
             yield return next.Invoke();
         }
 

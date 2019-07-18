@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -14,12 +14,9 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Branch")]
     public class Branch : Content
     {
+        [HideInInspector] public bool isAsync = false;
 
-        [HideInInspector]
-        public bool isAsync = false;
-
-        [HideInInspector]
-        public List<Content> contents = new List<Content>();
+        [HideInInspector] public List<Content> contents = new List<Content>();
 
         public override IEnumerator Invoke()
         {
@@ -34,6 +31,7 @@ namespace NodeTreeEditor.Contents
                     yield return c.Invoke();
                 }
             }
+
             yield return null;
         }
 

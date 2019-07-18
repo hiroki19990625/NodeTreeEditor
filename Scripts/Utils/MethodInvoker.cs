@@ -1,12 +1,13 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-
 using NodeTreeEditor.Variables;
-
+using UnityEngine;
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Utils
@@ -14,14 +15,12 @@ namespace NodeTreeEditor.Utils
     /// <summary>
     /// Method invoker.
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class MethodInvoker
     {
-
-        [System.Serializable]
+        [Serializable]
         public class Parameter
         {
-
             public enum ParameterType
             {
                 Int,
@@ -34,6 +33,7 @@ namespace NodeTreeEditor.Utils
                 String,
                 Vector2,
                 Vector3,
+                Vector4,
                 Transform,
                 Object,
                 MonoBehaviour
@@ -54,6 +54,7 @@ namespace NodeTreeEditor.Utils
             public string v_string = "";
             public Vector2 v_vector2;
             public Vector3 v_vector3;
+            public Vector3 v_vector4;
             public Transform v_transform;
             public Object v_object;
             public MonoBehaviour v_MonoBehaviour;
@@ -61,11 +62,10 @@ namespace NodeTreeEditor.Utils
             public bool useVariable = false;
             public Value variable;
 
-            public void SetParameterType(System.Type type)
+            public void SetParameterType(Type type)
             {
                 switch (type.Name)
                 {
-
                     case "Single":
                         parameterType = ParameterType.Float;
                         break;
@@ -106,6 +106,10 @@ namespace NodeTreeEditor.Utils
                         parameterType = ParameterType.Vector3;
                         break;
 
+                    case "Vector4":
+                        parameterType = ParameterType.Vector4;
+                        break;
+
                     case "Transform":
                         parameterType = ParameterType.Transform;
                         break;
@@ -125,7 +129,6 @@ namespace NodeTreeEditor.Utils
                 object value = null;
                 switch (parameterType)
                 {
-
                     case ParameterType.Bool:
                         value = v_bool;
                         break;
@@ -177,16 +180,20 @@ namespace NodeTreeEditor.Utils
                     case ParameterType.Vector3:
                         value = v_vector3;
                         break;
+
+                    case ParameterType.Vector4:
+                        value = v_vector3;
+                        break;
                 }
+
                 return value;
             }
 
-            public System.Type GetParameterType()
+            public Type GetParameterType()
             {
-                System.Type type = null;
+                Type type = null;
                 switch (parameterType)
                 {
-
                     case ParameterType.Bool:
                         type = typeof(bool);
                         break;
@@ -239,6 +246,7 @@ namespace NodeTreeEditor.Utils
                         type = typeof(Vector3);
                         break;
                 }
+
                 return type;
             }
 
@@ -249,17 +257,18 @@ namespace NodeTreeEditor.Utils
                 EditorGUILayout.BeginVertical(GUI.skin.box);
                 switch (parameterType)
                 {
-
                     case ParameterType.Bool:
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
                             if (variable is BoolValue)
                             {
                                 var conv = (BoolValue) variable;
                                 v_bool = (bool) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_bool + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
+                                EditorGUILayout.HelpBox(v_bool + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
                             }
                             else if (variable == null)
                             {
@@ -274,10 +283,11 @@ namespace NodeTreeEditor.Utils
                         {
                             v_bool = EditorGUILayout.Toggle(parameterName, v_bool);
                         }
+
                         break;
 
                     case ParameterType.Byte:
-                        //v_byte = EditorGUILayout;
+                        v_byte = (byte) EditorGUILayout.IntField(parameterName, v_byte);
                         break;
 
                     case ParameterType.Double:
@@ -288,12 +298,14 @@ namespace NodeTreeEditor.Utils
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
                             if (variable is FloatValue)
                             {
                                 var conv = (FloatValue) variable;
                                 v_float = (float) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_float + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
+                                EditorGUILayout.HelpBox(v_float + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
                             }
                             else if (variable == null)
                             {
@@ -308,18 +320,21 @@ namespace NodeTreeEditor.Utils
                         {
                             v_float = EditorGUILayout.FloatField(parameterName, v_float);
                         }
+
                         break;
 
                     case ParameterType.Int:
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
                             if (variable is IntValue)
                             {
                                 var conv = (IntValue) variable;
                                 v_int = (int) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_int + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
+                                EditorGUILayout.HelpBox(v_int + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
                             }
                             else if (variable == null)
                             {
@@ -334,6 +349,7 @@ namespace NodeTreeEditor.Utils
                         {
                             v_int = EditorGUILayout.IntField(parameterName, v_int);
                         }
+
                         break;
 
                     case ParameterType.Long:
@@ -341,27 +357,55 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.MonoBehaviour:
-                        v_MonoBehaviour = (MonoBehaviour) EditorGUILayout.ObjectField(parameterName, v_MonoBehaviour, typeof(MonoBehaviour), true);
+                        v_MonoBehaviour = (MonoBehaviour) EditorGUILayout.ObjectField(parameterName, v_MonoBehaviour,
+                            typeof(MonoBehaviour), true);
                         break;
 
                     case ParameterType.Object:
-                        v_object = EditorGUILayout.ObjectField(parameterName, v_object, typeof(Object), true);
+                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
+                        if (useVariable)
+                        {
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
+                            if (variable is ObjectValue)
+                            {
+                                var conv = (ObjectValue) variable;
+                                v_object = (Object) conv.GetValue();
+                                EditorGUILayout.HelpBox(v_object + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
+                            }
+                            else if (variable == null)
+                            {
+                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
+                            }
+                            else
+                            {
+                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
+                            }
+                        }
+                        else
+                        {
+                            v_object = EditorGUILayout.ObjectField(parameterName, v_object, typeof(Object), true);
+                        }
+
                         break;
 
                     case ParameterType.Short:
-                        //v_short = EditorGUILayout;
+                        v_short = (short) EditorGUILayout.IntField(parameterName, v_short);
                         break;
 
                     case ParameterType.String:
                         useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
                         if (useVariable)
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value), true);
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
                             if (variable is StringValue)
                             {
                                 var conv = (StringValue) variable;
                                 v_string = (string) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")", MessageType.Info);
+                                EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
                             }
                             else if (variable == null)
                             {
@@ -377,20 +421,103 @@ namespace NodeTreeEditor.Utils
                             EditorGUILayout.LabelField(parameterName);
                             v_string = EditorGUILayout.TextArea(v_string);
                         }
+
                         break;
 
                     case ParameterType.Transform:
-                        v_transform = (Transform) EditorGUILayout.ObjectField(parameterName, v_transform, typeof(Transform), true);
+                        v_transform =
+                            (Transform) EditorGUILayout.ObjectField(parameterName, v_transform, typeof(Transform),
+                                true);
                         break;
 
                     case ParameterType.Vector2:
-                        v_vector2 = EditorGUILayout.Vector2Field(parameterName, v_vector2);
+                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
+                        if (useVariable)
+                        {
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
+                            if (variable is Vector2Value)
+                            {
+                                var conv = (Vector2Value) variable;
+                                v_vector2 = (Vector2) conv.GetValue();
+                                EditorGUILayout.HelpBox(v_vector2 + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
+                            }
+                            else if (variable == null)
+                            {
+                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
+                            }
+                            else
+                            {
+                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
+                            }
+                        }
+                        else
+                        {
+                            v_vector2 = EditorGUILayout.Vector2Field(parameterName, v_vector2);
+                        }
+
                         break;
 
                     case ParameterType.Vector3:
-                        v_vector3 = EditorGUILayout.Vector3Field(parameterName, v_vector3);
+                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
+                        if (useVariable)
+                        {
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
+                            if (variable is Vector3Value)
+                            {
+                                var conv = (Vector3Value) variable;
+                                v_vector3 = (Vector3) conv.GetValue();
+                                EditorGUILayout.HelpBox(v_vector3 + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
+                            }
+                            else if (variable == null)
+                            {
+                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
+                            }
+                            else
+                            {
+                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
+                            }
+                        }
+                        else
+                        {
+                            v_vector3 = EditorGUILayout.Vector3Field(parameterName, v_vector3);
+                        }
+
+                        break;
+
+                    case ParameterType.Vector4:
+                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
+                        if (useVariable)
+                        {
+                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
+                                true);
+                            if (variable is Vector4Value)
+                            {
+                                var conv = (Vector4Value) variable;
+                                v_vector4 = (Vector4) conv.GetValue();
+                                EditorGUILayout.HelpBox(v_vector4 + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
+                            }
+                            else if (variable == null)
+                            {
+                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
+                            }
+                            else
+                            {
+                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
+                            }
+                        }
+                        else
+                        {
+                            v_vector4 = EditorGUILayout.Vector4Field(parameterName, v_vector4);
+                        }
+
                         break;
                 }
+
                 EditorGUILayout.EndVertical();
             }
 
@@ -426,6 +553,7 @@ namespace NodeTreeEditor.Utils
                 {
                     objs.Add(p.GetValue());
                 }
+
                 if (nonObject)
                 {
                     if (m.ReturnType.Name == "IEnumerator")
@@ -449,25 +577,28 @@ namespace NodeTreeEditor.Utils
                     }
                 }
             }
+
             yield return null;
         }
 
         public List<string> GetAllClass(string targetStr = "")
         {
             List<string> list = new List<string>();
-            Assembly asm = Assembly.GetAssembly(System.Type.GetType(classTargetName));
+            Assembly asm = Assembly.GetAssembly(Type.GetType(classTargetName));
             foreach (var t in asm.GetTypes())
             {
                 list.Add(t.FullName);
             }
+
             if (targetStr != "")
             {
-                list = list.FindAll(new System.Predicate<string>((string obj) =>
-                        {
-                            var c = obj.IndexOf(targetStr, System.StringComparison.OrdinalIgnoreCase);
-                            return c != -1;
-                        }));
+                list = list.FindAll(new Predicate<string>((string obj) =>
+                {
+                    var c = obj.IndexOf(targetStr, StringComparison.OrdinalIgnoreCase);
+                    return c != -1;
+                }));
             }
+
             list.Sort();
             return list;
         }
@@ -480,6 +611,7 @@ namespace NodeTreeEditor.Utils
             {
                 return list;
             }
+
             foreach (var m in invokeObject.GetType().GetMethods())
             {
                 if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
@@ -492,13 +624,16 @@ namespace NodeTreeEditor.Utils
                             nsp = true;
                         }
                     }
+
                     if (nsp)
                     {
                         continue;
                     }
+
                     list.Add(m.Name);
                 }
             }
+
             return list;
         }
 
@@ -528,9 +663,11 @@ namespace NodeTreeEditor.Utils
                     {
                         continue;
                     }
+
                     list.Add(m.GetParameters());
                 }
             }
+
             return list;
         }
 
@@ -570,9 +707,11 @@ namespace NodeTreeEditor.Utils
                     {
                         continue;
                     }
+
                     list.Add(str);
                 }
             }
+
             return list;
         }
 
@@ -585,7 +724,7 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(System.Type.GetType(classTargetName));
+            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
                 if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
@@ -600,14 +739,17 @@ namespace NodeTreeEditor.Utils
                                 nsp = true;
                             }
                         }
+
                         if (nsp)
                         {
                             continue;
                         }
+
                         list.Add(m.Name);
                     }
                 }
             }
+
             return list;
         }
 
@@ -620,7 +762,7 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(System.Type.GetType(classTargetName));
+            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
                 if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
@@ -635,14 +777,17 @@ namespace NodeTreeEditor.Utils
                                 nsp = true;
                             }
                         }
+
                         if (nsp)
                         {
                             continue;
                         }
+
                         list.Add(m.GetParameters());
                     }
                 }
             }
+
             return list;
         }
 
@@ -655,7 +800,7 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(System.Type.GetType(classTargetName));
+            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
                 string str = "";
@@ -673,20 +818,24 @@ namespace NodeTreeEditor.Utils
                                 nsp = true;
                             }
                         }
+
                         str = str.Remove(str.Length - 2);
                         if (!str.Contains("("))
                         {
                             str += " (";
                         }
+
                         str += ")";
                         if (nsp)
                         {
                             continue;
                         }
+
                         list.Add(str);
                     }
                 }
             }
+
             return list;
         }
 
@@ -697,9 +846,9 @@ namespace NodeTreeEditor.Utils
             {
                 try
                 {
-                    var asm = Assembly.GetAssembly(System.Type.GetType(classTargetName));
+                    var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
                     var types = asm.GetTypes();
-                    System.Type type = null;
+                    Type type = null;
                     foreach (var t in types)
                     {
                         if (t.FullName == classType)
@@ -708,6 +857,7 @@ namespace NodeTreeEditor.Utils
                             break;
                         }
                     }
+
                     if (type != null)
                     {
                         var method = type.GetMethod(selectedMethod, ParameterTypes());
@@ -754,16 +904,18 @@ namespace NodeTreeEditor.Utils
                     selectedMethod = "";
                 }
             }
+
             return info;
         }
 
-        public System.Type[] ParameterTypes()
+        public Type[] ParameterTypes()
         {
-            List<System.Type> types = new List<System.Type>();
+            List<Type> types = new List<Type>();
             foreach (var p in parameters)
             {
                 types.Add(p.GetParameterType());
             }
+
             return types.ToArray();
         }
 
@@ -772,11 +924,10 @@ namespace NodeTreeEditor.Utils
             parameters.Clear();
         }
 
-        public bool SupportParameter(System.Type type)
+        public bool SupportParameter(Type type)
         {
             switch (type.Name)
             {
-
                 case "Single":
                 case "Double":
                 case "Boolean":
@@ -787,12 +938,19 @@ namespace NodeTreeEditor.Utils
                 case "Int64":
                 case "Vector2":
                 case "Vector3":
+                case "Vector4":
                 case "Transform":
                 case "Object":
                 case "MonoBehaviour":
                     return true;
             }
+
             return false;
+        }
+
+        private static Value[] GetValueComponents(GameObject gameObject)
+        {
+            return gameObject.GetComponents<Value>();
         }
     }
 }

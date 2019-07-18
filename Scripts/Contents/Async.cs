@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -13,7 +13,6 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Async")]
     public class Async : Content
     {
-
         public override IEnumerator Invoke()
         {
             StartCoroutine(next.Invoke());

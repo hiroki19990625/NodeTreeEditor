@@ -13,7 +13,6 @@ namespace NodeTreeEditor.Utils
 
         public NodeTreeEditorException(string message, Exception inner) : base(message, inner)
         {
-
         }
     }
 }

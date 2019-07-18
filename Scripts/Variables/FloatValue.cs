@@ -8,7 +8,6 @@ namespace NodeTreeEditor.Variables
     [AddComponentMenu("NodeTreeEditor/Values/FloatValue")]
     class FloatValue : Value
     {
-
         public float value;
 
         public override object GetValue()

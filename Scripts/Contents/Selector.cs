@@ -1,14 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using NodeTreeEditor.Variables;
 using NodeTreeEditor.Utils;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -19,9 +17,7 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Selector")]
     public class Selector : Content
     {
-
-        [HideInInspector]
-        public List<Conditions> list = new List<Conditions>();
+        [HideInInspector] public List<Conditions> list = new List<Conditions>();
 
         public override IEnumerator Invoke()
         {
@@ -30,6 +26,7 @@ namespace NodeTreeEditor.Contents
                 Debug.LogError("[エラー]条件が設定されていません。");
                 yield break;
             }
+
             foreach (Conditions cond in list)
             {
                 if (cond.next == null)
@@ -40,11 +37,13 @@ namespace NodeTreeEditor.Contents
                     yield break;
                 }
             }
+
             if (next == null)
             {
                 Debug.LogError("[エラー]その他が設定されていません。");
                 yield break;
             }
+
             yield return next.Invoke();
         }
 
@@ -77,13 +76,11 @@ namespace NodeTreeEditor.Contents
                         cond.valueTypeA = (Conditions.ValueType) EditorGUILayout.EnumPopup("値A の 種類", cond.valueTypeA);
                         switch (cond.valueTypeA)
                         {
-
                             case Conditions.ValueType.Raw:
                                 cond.SysTypeA = (Value.ValueType) EditorGUILayout.EnumPopup("値A　の タイプ", cond.SysTypeA);
 
                                 switch (cond.SysTypeA)
                                 {
-
                                     case Value.ValueType.Int:
                                         cond.rawInt = EditorGUILayout.IntField("値(int)", cond.rawInt);
                                         break;
@@ -100,6 +97,7 @@ namespace NodeTreeEditor.Contents
                                         cond.rawString = EditorGUILayout.TextField("値(string)", cond.rawString);
                                         break;
                                 }
+
                                 break;
 
                             case Conditions.ValueType.Variable:
@@ -113,7 +111,8 @@ namespace NodeTreeEditor.Contents
                                         var i = 0;
                                         foreach (Value v in values)
                                         {
-                                            menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList()
+                                            menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel,
+                                                new ArrayList()
                                                 {
                                                     "A",
                                                     cond,
@@ -121,9 +120,11 @@ namespace NodeTreeEditor.Contents
                                                 });
                                             i++;
                                         }
+
                                         menu.ShowAsContext();
                                     }
                                 }
+
                                 if (cond.valueA != null)
                                 {
                                     EditorGUILayout.LabelField("リンク済み:  " + cond.valueA.valueName);
@@ -132,6 +133,7 @@ namespace NodeTreeEditor.Contents
                                 {
                                     EditorGUILayout.HelpBox("条件の接続先が見つかりません。", MessageType.Error);
                                 }
+
                                 break;
                         }
                     }
@@ -147,16 +149,18 @@ namespace NodeTreeEditor.Contents
                             foreach (Value v in values)
                             {
                                 menu.AddItem(new GUIContent(i + "." + v.valueName), false, GenClickDel, new ArrayList()
-                                    {
-                                        "B",
-                                        cond,
-                                        v
-                                    });
+                                {
+                                    "B",
+                                    cond,
+                                    v
+                                });
                                 i++;
                             }
+
                             menu.ShowAsContext();
                         }
                     }
+
                     if (cond.valueB != null)
                     {
                         EditorGUILayout.LabelField("リンク済み:  " + cond.valueB.valueName);
@@ -170,16 +174,19 @@ namespace NodeTreeEditor.Contents
                     {
                         if (GUILayout.Button("削除"))
                         {
-                            if (EditorUtility.DisplayDialog("Warning", "Condition " + (c + 1) + "を削除しますか?", "OK", "キャンセル"))
+                            if (EditorUtility.DisplayDialog("Warning", "Condition " + (c + 1) + "を削除しますか?", "OK",
+                                "キャンセル"))
                             {
                                 removeCond = cond;
                             }
                         }
+
                         if (cond.next != null)
                         {
                             if (GUILayout.Button("リンクを解除"))
                             {
-                                if (EditorUtility.DisplayDialog("Warning", "Condition " + (c + 1) + "のリンクを解除しますか?", "OK", "キャンセル"))
+                                if (EditorUtility.DisplayDialog("Warning", "Condition " + (c + 1) + "のリンクを解除しますか?",
+                                    "OK", "キャンセル"))
                                 {
                                     cond.next = null;
                                 }
@@ -191,6 +198,7 @@ namespace NodeTreeEditor.Contents
                     GUILayout.EndVertical();
                     c++;
                 }
+
                 if (removeCond != null)
                 {
                     list.Remove(removeCond);
@@ -271,6 +279,7 @@ namespace NodeTreeEditor.Contents
             {
                 cond.next = null;
             }
+
             next = null;
         }
 
@@ -283,13 +292,14 @@ namespace NodeTreeEditor.Contents
             foreach (Conditions cond in list)
             {
                 menu.AddItem(new GUIContent("Condition " + (c + 1)), false, GDConnect, new ArrayList()
-                    {
-                        c,
-                        content,
-                        cond
-                    });
+                {
+                    c,
+                    content,
+                    cond
+                });
                 c++;
             }
+
             menu.ShowAsContext();
         }
 
@@ -321,8 +331,10 @@ namespace NodeTreeEditor.Contents
                 {
                     ConnectLine(this, cond.next, LineColor(), c + 1);
                 }
+
                 c++;
             }
+
             if (next != null)
             {
                 ConnectLine(this, next, Color.black);
@@ -344,7 +356,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+            Handles.DrawSolidRectangleWithOutline(
+                new Vector3[]
+                {
+                    (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP,
+                    (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP
+                }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
             GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Cond" + index);
 

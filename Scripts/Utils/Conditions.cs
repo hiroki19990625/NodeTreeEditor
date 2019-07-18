@@ -1,5 +1,4 @@
-﻿
-using NodeTreeEditor.Contents;
+﻿using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
 
 namespace NodeTreeEditor.Utils
@@ -10,7 +9,6 @@ namespace NodeTreeEditor.Utils
     [System.Serializable]
     public class Conditions
     {
-
         public enum CondType
         {
             Equal,
@@ -46,7 +44,6 @@ namespace NodeTreeEditor.Utils
         {
             switch (type)
             {
-
                 case CondType.Equal:
                     if (IsVariable())
                     {
@@ -133,6 +130,7 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
 
                 case CondType.NotEqual:
@@ -221,6 +219,7 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
 
                 case CondType.Big_Small:
@@ -271,6 +270,7 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
 
                 case CondType.Big_Small_Equal:
@@ -321,6 +321,7 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
 
                 case CondType.Small_Big:
@@ -371,6 +372,7 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
 
                 case CondType.Small_Big_Equal:
@@ -421,8 +423,10 @@ namespace NodeTreeEditor.Utils
                             }
                         }
                     }
+
                     break;
             }
+
             return false;
         }
 
@@ -432,6 +436,7 @@ namespace NodeTreeEditor.Utils
             {
                 return true;
             }
+
             return false;
         }
 
@@ -441,6 +446,7 @@ namespace NodeTreeEditor.Utils
             {
                 return true;
             }
+
             return false;
         }
     }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -13,9 +13,7 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Label")]
     public class Label : Content
     {
-
-        [HideInInspector]
-        public string label = "Label";
+        [HideInInspector] public string label = "Label";
 
         public override IEnumerator Invoke()
         {

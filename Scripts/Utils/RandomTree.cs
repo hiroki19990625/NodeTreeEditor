@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using NodeTreeEditor.Contents;
 
 namespace NodeTreeEditor.Utils
@@ -35,8 +34,10 @@ namespace NodeTreeEditor.Utils
                 {
                     return index;
                 }
+
                 index++;
             }
+
             return -1;
         }
     }

@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -13,7 +13,6 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Base/End")]
     public class End : Content
     {
-
         public End()
         {
             commonName = "End";

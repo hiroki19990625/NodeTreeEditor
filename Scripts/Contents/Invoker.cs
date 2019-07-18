@@ -1,11 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
 using NodeTreeEditor.Utils;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -16,9 +15,7 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Invoker")]
     public class Invoker : Content
     {
-
-        [HideInInspector]
-        public List<MethodInvoker> list = new List<MethodInvoker>();
+        [HideInInspector] public List<MethodInvoker> list = new List<MethodInvoker>();
 
         public override IEnumerator Invoke()
         {
@@ -26,6 +23,7 @@ namespace NodeTreeEditor.Contents
             {
                 yield return StartCoroutine(l.Invoke(this));
             }
+
             yield return next.Invoke();
         }
 
@@ -65,6 +63,7 @@ namespace NodeTreeEditor.Contents
                             {
                                 i.classTargetName = "UnityEngine.Object, UnityEngine";
                             }
+
                             i.classSerach = EditorGUILayout.TextField("検索", i.classSerach);
 
                             if (i.classTargetName != "")
@@ -74,13 +73,16 @@ namespace NodeTreeEditor.Contents
                                     GenericMenu menu = new GenericMenu();
                                     foreach (var s in i.GetAllClass(i.classSerach))
                                     {
-                                        menu.AddItem(new GUIContent(s), false, ClassSelect, new ArrayList(){
+                                        menu.AddItem(new GUIContent(s), false, ClassSelect, new ArrayList()
+                                        {
                                             i,
                                             s
                                         });
                                     }
+
                                     menu.ShowAsContext();
                                 }
+
                                 if (i.classType != "")
                                 {
                                     GUILayout.Label("選択済:  " + i.classType);
@@ -92,15 +94,18 @@ namespace NodeTreeEditor.Contents
                                         var ind = 0;
                                         foreach (var s in i.GetTypeMethodLabel())
                                         {
-                                            menu.AddItem(new GUIContent(s), false, MethodSelect, new ArrayList(){
+                                            menu.AddItem(new GUIContent(s), false, MethodSelect, new ArrayList()
+                                            {
                                                 i,
-                                                names [ind],
-                                                parameter [ind]
+                                                names[ind],
+                                                parameter[ind]
                                             });
                                             ind++;
                                         }
+
                                         menu.ShowAsContext();
                                     }
+
                                     if (i.selectedMethod != "")
                                     {
                                         GUILayout.Label("選択済:  " + i.selectedMethod);
@@ -123,7 +128,6 @@ namespace NodeTreeEditor.Contents
                                     }
                                 }
                             }
-
                         }
                         else
                         {
@@ -138,10 +142,9 @@ namespace NodeTreeEditor.Contents
                                         Component[] comps = ((GameObject) i.invokeObject).GetComponents<Component>();
                                         foreach (Component c in comps)
                                         {
-                                            menu.AddItem(new GUIContent(c.GetType().Name + "<" + c.GetInstanceID() + ">"), false, (object o) =>
-                                            {
-                                                i.invokeObject = (Component) o;
-                                            }, c);
+                                            menu.AddItem(
+                                                new GUIContent(c.GetType().Name + "<" + c.GetInstanceID() + ">"), false,
+                                                (object o) => { i.invokeObject = (Component) o; }, c);
                                         }
 
                                         menu.ShowAsContext();
@@ -157,15 +160,18 @@ namespace NodeTreeEditor.Contents
                                     var ind = 0;
                                     foreach (var s in i.GetInvokeObjectMethodLabel())
                                     {
-                                        menu.AddItem(new GUIContent(s), false, MethodSelect, new ArrayList(){
+                                        menu.AddItem(new GUIContent(s), false, MethodSelect, new ArrayList()
+                                        {
                                             i,
-                                            names [ind],
-                                            parameter [ind]
+                                            names[ind],
+                                            parameter[ind]
                                         });
                                         ind++;
                                     }
+
                                     menu.ShowAsContext();
                                 }
+
                                 if (i.selectedMethod != "")
                                 {
                                     GUILayout.Label("選択済:  " + i.selectedMethod);
@@ -183,7 +189,6 @@ namespace NodeTreeEditor.Contents
                                                 pmt.ShowField();
                                             }
                                         }
-
                                     }
                                     GUILayout.EndVertical();
                                 }
@@ -193,6 +198,7 @@ namespace NodeTreeEditor.Contents
                                 i.selectedMethod = "";
                             }
                         }
+
                         if (GUILayout.Button("削除"))
                         {
                             if (EditorUtility.DisplayDialog("Warning", "このコンテンツを削除しますか?", "OK", "キャンセル"))
@@ -203,6 +209,7 @@ namespace NodeTreeEditor.Contents
                     }
                     GUILayout.EndVertical();
                 }
+
                 if (rem != null)
                 {
                     list.Remove(rem);

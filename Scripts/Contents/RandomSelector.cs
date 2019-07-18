@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 using NodeTreeEditor.Utils;
-
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
-
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -17,9 +15,7 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/RandomSelector")]
     public class RandomSelector : Content
     {
-
-        [HideInInspector]
-        public RandomTree tree = new RandomTree();
+        [HideInInspector] public RandomTree tree = new RandomTree();
 
         public override IEnumerator Invoke()
         {
@@ -28,17 +24,20 @@ namespace NodeTreeEditor.Contents
                 Debug.LogError("[エラー]条件が設定されていません。");
                 yield break;
             }
+
             var rand = RandomTree.GetIndex(tree);
             if (rand != -1)
             {
                 yield return tree.treenodes[rand].next.Invoke();
                 yield break;
             }
+
             if (next == null)
             {
                 Debug.LogError("[エラー]その他が設定されていません。");
                 yield break;
             }
+
             yield return next.Invoke();
         }
 
@@ -81,16 +80,19 @@ namespace NodeTreeEditor.Contents
                         {
                             if (GUILayout.Button("削除"))
                             {
-                                if (EditorUtility.DisplayDialog("Warning", "Node " + (c + 1) + "を削除しますか?", "OK", "キャンセル"))
+                                if (EditorUtility.DisplayDialog("Warning", "Node " + (c + 1) + "を削除しますか?", "OK",
+                                    "キャンセル"))
                                 {
                                     removeNode = node;
                                 }
                             }
+
                             if (node.next != null)
                             {
                                 if (GUILayout.Button("リンクを解除"))
                                 {
-                                    if (EditorUtility.DisplayDialog("Warning", "Node " + (c + 1) + "のリンクを解除しますか?", "OK", "キャンセル"))
+                                    if (EditorUtility.DisplayDialog("Warning", "Node " + (c + 1) + "のリンクを解除しますか?", "OK",
+                                        "キャンセル"))
                                     {
                                         node.next = null;
                                     }
@@ -102,6 +104,7 @@ namespace NodeTreeEditor.Contents
                     }
                     GUILayout.EndVertical();
                 }
+
                 if (removeNode != null)
                 {
                     tree.treenodes.Remove(removeNode);
@@ -166,6 +169,7 @@ namespace NodeTreeEditor.Contents
             {
                 node.next = null;
             }
+
             next = null;
         }
 
@@ -178,13 +182,14 @@ namespace NodeTreeEditor.Contents
             foreach (RandomTree.TreeNode node in tree.treenodes)
             {
                 menu.AddItem(new GUIContent("Node " + (c + 1)), false, GDConnect, new ArrayList()
-                    {
-                        c,
-                        content,
-                        node
-                    });
+                {
+                    c,
+                    content,
+                    node
+                });
                 c++;
             }
+
             menu.ShowAsContext();
         }
 
@@ -216,8 +221,10 @@ namespace NodeTreeEditor.Contents
                 {
                     ConnectLine(this, node.next, LineColor(), c + 1);
                 }
+
                 c++;
             }
+
             if (next != null)
             {
                 ConnectLine(this, next, Color.black);
@@ -239,7 +246,12 @@ namespace NodeTreeEditor.Contents
             Handles.color = color;
             Handles.DrawLine(startPos, endPos);
 
-            Handles.DrawSolidRectangleWithOutline(new Vector3[] { (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP }, color, color);
+            Handles.DrawSolidRectangleWithOutline(
+                new Vector3[]
+                {
+                    (f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP,
+                    (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP
+                }, color, color);
             //Handles.DrawPolyLine((f * (Vector3.down * 10)) + centerP, (f * (Vector3.right * 20)) + centerP, (f * (Vector3.up * 10)) + centerP, (f * (Vector3.down * 10)) + centerP);
             GUI.Label(new Rect(centerP.x, centerP.y, 200, 20), "Node" + index);
 

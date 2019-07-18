@@ -8,7 +8,6 @@ namespace NodeTreeEditor.Variables
     [AddComponentMenu("NodeTreeEditor/Values/BoolValue")]
     class BoolValue : Value
     {
-
         public bool value;
 
         public override object GetValue()

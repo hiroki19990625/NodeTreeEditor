@@ -8,7 +8,6 @@ namespace NodeTreeEditor.Variables
     [AddComponentMenu("NodeTreeEditor/Values/IntValue")]
     class IntValue : Value
     {
-
         public int value;
 
         public override object GetValue()

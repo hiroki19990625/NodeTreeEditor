@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
-
 #if UNITY_EDITOR
 using UnityEditor;
+
 #endif
 
 namespace NodeTreeEditor.Contents
@@ -13,12 +13,9 @@ namespace NodeTreeEditor.Contents
     [AddComponentMenu("NodeTreeEditor/Content/Sync")]
     public class Sync : Content
     {
+        [HideInInspector] public int maxCount = 0;
 
-        [HideInInspector]
-        public int maxCount = 0;
-
-        [HideInInspector]
-        public int count = 0;
+        [HideInInspector] public int count = 0;
 
         public override IEnumerator Invoke()
         {
@@ -28,6 +25,7 @@ namespace NodeTreeEditor.Contents
                 Reset();
                 yield return next.Invoke();
             }
+
             yield return null;
         }
 
