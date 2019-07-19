@@ -193,6 +193,11 @@ namespace NodeTreeEditor.Window
                     var c = local.gameObject.AddComponent<ObjectValue>();
                     c.valueType = Value.ValueType.Object;
                 });
+                menu.AddItem(new GUIContent("Add GameObjectValue"), false, () =>
+                {
+                    var c = local.gameObject.AddComponent<GameObjectValue>();
+                    c.valueType = Value.ValueType.GameObject;
+                });
                 menu.AddItem(new GUIContent("Add Vector2Value"), false, () =>
                 {
                     var c = local.gameObject.AddComponent<Vector2Value>();

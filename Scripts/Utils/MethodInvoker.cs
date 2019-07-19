@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -36,6 +37,7 @@ namespace NodeTreeEditor.Utils
                 Vector4,
                 Transform,
                 Object,
+                GameObject,
                 MonoBehaviour
             }
 
@@ -57,10 +59,20 @@ namespace NodeTreeEditor.Utils
             public Vector3 v_vector4;
             public Transform v_transform;
             public Object v_object;
-            public MonoBehaviour v_MonoBehaviour;
+            public GameObject v_gameObject;
+            public MonoBehaviour v_monoBehaviour;
 
-            public bool useVariable = false;
+            public bool useVariable;
+            public bool useLocal;
+            public GameObject variableObject;
             public Value variable;
+
+            internal Content _content;
+
+            public Parameter(Content content)
+            {
+                _content = content;
+            }
 
             public void SetParameterType(Type type)
             {
@@ -118,6 +130,10 @@ namespace NodeTreeEditor.Utils
                         parameterType = ParameterType.Object;
                         break;
 
+                    case "GameObject":
+                        parameterType = ParameterType.GameObject;
+                        break;
+
                     case "MonoBehaviour":
                         parameterType = ParameterType.MonoBehaviour;
                         break;
@@ -154,11 +170,15 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.MonoBehaviour:
-                        value = v_MonoBehaviour;
+                        value = v_monoBehaviour;
                         break;
 
                     case ParameterType.Object:
                         value = v_object;
+                        break;
+
+                    case ParameterType.GameObject:
+                        value = v_gameObject;
                         break;
 
                     case ParameterType.Short:
@@ -226,6 +246,10 @@ namespace NodeTreeEditor.Utils
                         type = typeof(Object);
                         break;
 
+                    case ParameterType.GameObject:
+                        type = typeof(GameObject);
+                        break;
+
                     case ParameterType.Short:
                         type = typeof(short);
                         break;
@@ -258,32 +282,12 @@ namespace NodeTreeEditor.Utils
                 switch (parameterType)
                 {
                     case ParameterType.Bool:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<BoolValue>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is BoolValue)
-                            {
-                                var conv = (BoolValue) variable;
-                                v_bool = (bool) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_bool + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_bool = EditorGUILayout.Toggle(parameterName, v_bool);
-                        }
-
+                            v_bool = v.value;
+                            EditorGUILayout.HelpBox(v_bool + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_bool = EditorGUILayout.Toggle(parameterName, v_bool));
                         break;
 
                     case ParameterType.Byte:
@@ -295,61 +299,21 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.Float:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<FloatValue>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is FloatValue)
-                            {
-                                var conv = (FloatValue) variable;
-                                v_float = (float) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_float + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_float = EditorGUILayout.FloatField(parameterName, v_float);
-                        }
-
+                            v_float = v.value;
+                            EditorGUILayout.HelpBox(v_float + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_float = EditorGUILayout.FloatField(parameterName, v_float));
                         break;
 
                     case ParameterType.Int:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<IntValue>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is IntValue)
-                            {
-                                var conv = (IntValue) variable;
-                                v_int = (int) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_int + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_int = EditorGUILayout.IntField(parameterName, v_int);
-                        }
-
+                            v_int = v.value;
+                            EditorGUILayout.HelpBox(v_int + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_int = EditorGUILayout.IntField(parameterName, v_int));
                         break;
 
                     case ParameterType.Long:
@@ -357,37 +321,29 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.MonoBehaviour:
-                        v_MonoBehaviour = (MonoBehaviour) EditorGUILayout.ObjectField(parameterName, v_MonoBehaviour,
+                        v_monoBehaviour = (MonoBehaviour) EditorGUILayout.ObjectField(parameterName, v_monoBehaviour,
                             typeof(MonoBehaviour), true);
                         break;
 
                     case ParameterType.Object:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<ObjectValue>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is ObjectValue)
-                            {
-                                var conv = (ObjectValue) variable;
-                                v_object = (Object) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_object + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_object = EditorGUILayout.ObjectField(parameterName, v_object, typeof(Object), true);
-                        }
+                            v_object = v.value;
+                            EditorGUILayout.HelpBox(v_object + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_object = EditorGUILayout.ObjectField(parameterName, v_object, typeof(Object), true));
+                        break;
 
+                    case ParameterType.GameObject:
+                        VariableField<GameObjectValue>(v =>
+                            {
+                                v_gameObject = v.value;
+                                EditorGUILayout.HelpBox(v_gameObject + " << 変数の値(" + variable.valueName + ")",
+                                    MessageType.Info);
+                            },
+                            () => v_gameObject =
+                                (GameObject) EditorGUILayout.ObjectField(parameterName, v_gameObject,
+                                    typeof(GameObject), true));
                         break;
 
                     case ParameterType.Short:
@@ -395,33 +351,12 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.String:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<StringValue>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is StringValue)
-                            {
-                                var conv = (StringValue) variable;
-                                v_string = (string) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            EditorGUILayout.LabelField(parameterName);
-                            v_string = EditorGUILayout.TextArea(v_string);
-                        }
-
+                            v_string = v.value;
+                            EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_string = EditorGUILayout.TextField(parameterName, v_string));
                         break;
 
                     case ParameterType.Transform:
@@ -431,96 +366,100 @@ namespace NodeTreeEditor.Utils
                         break;
 
                     case ParameterType.Vector2:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<Vector2Value>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is Vector2Value)
-                            {
-                                var conv = (Vector2Value) variable;
-                                v_vector2 = (Vector2) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_vector2 + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_vector2 = EditorGUILayout.Vector2Field(parameterName, v_vector2);
-                        }
-
+                            v_vector2 = v.value;
+                            EditorGUILayout.HelpBox(v_vector2 + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_vector2 = EditorGUILayout.Vector2Field(parameterName, v_vector2));
                         break;
 
                     case ParameterType.Vector3:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<Vector3Value>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is Vector3Value)
-                            {
-                                var conv = (Vector3Value) variable;
-                                v_vector3 = (Vector3) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_vector3 + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_vector3 = EditorGUILayout.Vector3Field(parameterName, v_vector3);
-                        }
-
+                            v_vector3 = v.value;
+                            EditorGUILayout.HelpBox(v_vector3 + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_vector3 = EditorGUILayout.Vector3Field(parameterName, v_vector3));
                         break;
 
                     case ParameterType.Vector4:
-                        useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
-                        if (useVariable)
+                        VariableField<Vector4Value>(v =>
                         {
-                            variable = (Value) EditorGUILayout.ObjectField(parameterName, variable, typeof(Value),
-                                true);
-                            if (variable is Vector4Value)
-                            {
-                                var conv = (Vector4Value) variable;
-                                v_vector4 = (Vector4) conv.GetValue();
-                                EditorGUILayout.HelpBox(v_vector4 + " << 変数の値(" + variable.valueName + ")",
-                                    MessageType.Info);
-                            }
-                            else if (variable == null)
-                            {
-                                EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
-                            }
-                            else
-                            {
-                                EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
-                            }
-                        }
-                        else
-                        {
-                            v_vector4 = EditorGUILayout.Vector4Field(parameterName, v_vector4);
-                        }
-
+                            v_vector4 = v.value;
+                            EditorGUILayout.HelpBox(v_vector4 + " << 変数の値(" + variable.valueName + ")",
+                                MessageType.Info);
+                        }, () => v_vector4 = EditorGUILayout.Vector4Field(parameterName, v_vector4));
                         break;
                 }
 
                 EditorGUILayout.EndVertical();
             }
 
+            private void VariableField<T>(Action<T> converter, Action field) where T : Value
+            {
+                useVariable = EditorGUILayout.Toggle("Use Variable", useVariable);
+                if (useVariable)
+                {
+                    useLocal = EditorGUILayout.Toggle("Use Local", useLocal);
+                    if (useLocal)
+                    {
+                        variableObject = _content.transform.Find("LocalVariable")?.gameObject;
+                    }
+                    else
+                    {
+                        variableObject = (GameObject) EditorGUILayout.ObjectField(parameterName, variableObject,
+                            typeof(GameObject),
+                            true);
+                    }
+
+                    if (variableObject != null && GUILayout.Button("変数を選択"))
+                    {
+                        Value[] values = GetValueComponents(variableObject);
+                        GenericMenu menu = new GenericMenu();
+                        foreach (Value value in values)
+                        {
+                            if (value is T)
+                                menu.AddItem(
+                                    new GUIContent(value.valueName + " " + (value.constValue ? "(const)" : "")),
+                                    false,
+                                    data =>
+                                    {
+                                        Value select = (Value) data;
+                                        variable = select;
+                                    }, value);
+                        }
+
+                        menu.ShowAsContext();
+                    }
+                    else if (variableObject == null)
+                    {
+                        EditorGUILayout.HelpBox("オブジェクトが見つかりません。", MessageType.Error);
+                    }
+
+                    if (variable is T conv)
+                    {
+                        converter.Invoke(conv);
+                    }
+                    else if (variable == null)
+                    {
+                        EditorGUILayout.HelpBox("変数が設定されていません。", MessageType.Error);
+                    }
+                    else
+                    {
+                        EditorGUILayout.HelpBox("サポート外の変数です。<" + variable.valueName + ">", MessageType.Error);
+                    }
+                }
+                else
+                {
+                    field.Invoke();
+                }
+            }
+
+            private Value[] GetValueComponents(GameObject gameObject)
+            {
+                return gameObject.GetComponents<Value>();
+            }
 #endif
         }
 
@@ -584,7 +523,9 @@ namespace NodeTreeEditor.Utils
         public List<string> GetAllClass(string targetStr = "")
         {
             List<string> list = new List<string>();
-            Assembly asm = Assembly.GetAssembly(Type.GetType(classTargetName));
+            Type tp = Type.GetType(classTargetName);
+            if (tp == null) return list;
+            Assembly asm = Assembly.GetAssembly(tp);
             foreach (var t in asm.GetTypes())
             {
                 list.Add(t.FullName);
@@ -592,11 +533,11 @@ namespace NodeTreeEditor.Utils
 
             if (targetStr != "")
             {
-                list = list.FindAll(new Predicate<string>((string obj) =>
+                list = list.FindAll(obj =>
                 {
                     var c = obj.IndexOf(targetStr, StringComparison.OrdinalIgnoreCase);
                     return c != -1;
-                }));
+                });
             }
 
             list.Sort();
@@ -682,34 +623,7 @@ namespace NodeTreeEditor.Utils
 
             foreach (var m in invokeObject.GetType().GetMethods())
             {
-                string str = "";
-                if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
-                {
-                    var nsp = false;
-                    str = "<" + m.ReturnType.Name + "> " + m.Name + " (";
-                    foreach (var p in m.GetParameters())
-                    {
-                        str += p.ParameterType.Name + ", ";
-                        if (!SupportParameter(p.ParameterType))
-                        {
-                            nsp = true;
-                        }
-                    }
-
-                    str = str.Remove(str.Length - 2);
-                    if (!str.Contains("("))
-                    {
-                        str += " (";
-                    }
-
-                    str += ")";
-                    if (nsp)
-                    {
-                        continue;
-                    }
-
-                    list.Add(str);
-                }
+                BuildMethodDisplay(m, list);
             }
 
             return list;
@@ -724,7 +638,9 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
+            var tp = Type.GetType(classTargetName);
+            if (tp == null) return list;
+            var asm = Assembly.GetAssembly(tp);
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
                 if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
@@ -762,7 +678,9 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
+            var tp = Type.GetType(classTargetName);
+            if (tp == null) return list;
+            var asm = Assembly.GetAssembly(tp);
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
                 if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
@@ -800,40 +718,12 @@ namespace NodeTreeEditor.Utils
                 return list;
             }
 
-            var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
+            var tp = Type.GetType(classTargetName);
+            if (tp == null) return list;
+            var asm = Assembly.GetAssembly(tp);
             foreach (var m in asm.GetType(classType, true).GetMethods())
             {
-                string str = "";
-                if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
-                {
-                    if (m.IsStatic)
-                    {
-                        var nsp = false;
-                        str = "<" + m.ReturnType.Name + "> " + m.Name + " (";
-                        foreach (var p in m.GetParameters())
-                        {
-                            str += p.ParameterType.Name + ", ";
-                            if (!SupportParameter(p.ParameterType))
-                            {
-                                nsp = true;
-                            }
-                        }
-
-                        str = str.Remove(str.Length - 2);
-                        if (!str.Contains("("))
-                        {
-                            str += " (";
-                        }
-
-                        str += ")";
-                        if (nsp)
-                        {
-                            continue;
-                        }
-
-                        list.Add(str);
-                    }
-                }
+                BuildMethodDisplay(m, list);
             }
 
             return list;
@@ -846,7 +736,9 @@ namespace NodeTreeEditor.Utils
             {
                 try
                 {
-                    var asm = Assembly.GetAssembly(Type.GetType(classTargetName));
+                    var tp = Type.GetType(classTargetName);
+                    if (tp == null) return null;
+                    var asm = Assembly.GetAssembly(tp);
                     var types = asm.GetTypes();
                     Type type = null;
                     foreach (var t in types)
@@ -908,23 +800,12 @@ namespace NodeTreeEditor.Utils
             return info;
         }
 
-        public Type[] ParameterTypes()
-        {
-            List<Type> types = new List<Type>();
-            foreach (var p in parameters)
-            {
-                types.Add(p.GetParameterType());
-            }
-
-            return types.ToArray();
-        }
-
         public void ClearParameter()
         {
             parameters.Clear();
         }
 
-        public bool SupportParameter(Type type)
+        private bool SupportParameter(Type type)
         {
             switch (type.Name)
             {
@@ -941,6 +822,7 @@ namespace NodeTreeEditor.Utils
                 case "Vector4":
                 case "Transform":
                 case "Object":
+                case "GameObject":
                 case "MonoBehaviour":
                     return true;
             }
@@ -948,9 +830,47 @@ namespace NodeTreeEditor.Utils
             return false;
         }
 
-        private static Value[] GetValueComponents(GameObject gameObject)
+        private Type[] ParameterTypes()
         {
-            return gameObject.GetComponents<Value>();
+            List<Type> types = new List<Type>();
+            foreach (var p in parameters)
+            {
+                types.Add(p.GetParameterType());
+            }
+
+            return types.ToArray();
+        }
+
+        private void BuildMethodDisplay(MethodInfo m, List<string> list)
+        {
+            string str;
+            if (m.ReturnType == typeof(void) || m.ReturnType == typeof(IEnumerator))
+            {
+                var nsp = false;
+                str = "<" + m.ReturnType.Name + "> " + m.Name + " (";
+                foreach (var p in m.GetParameters())
+                {
+                    str += p.ParameterType.Name + ", ";
+                    if (!SupportParameter(p.ParameterType))
+                    {
+                        nsp = true;
+                    }
+                }
+
+                str = str.Remove(str.Length - 2);
+                if (!str.Contains("("))
+                {
+                    str += " (";
+                }
+
+                str += ")";
+                if (nsp)
+                {
+                    return;
+                }
+
+                list.Add(str);
+            }
         }
     }
 }

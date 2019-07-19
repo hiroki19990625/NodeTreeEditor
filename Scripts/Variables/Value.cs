@@ -18,6 +18,7 @@ namespace NodeTreeEditor.Variables
             Vector4,
             String,
             Object,
+            GameObject
         }
 
         public string valueName = "Variable";

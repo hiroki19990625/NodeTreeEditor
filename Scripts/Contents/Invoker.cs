@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using NodeTreeEditor.Utils;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 
@@ -186,6 +187,8 @@ namespace NodeTreeEditor.Contents
                                         {
                                             foreach (var pmt in i.parameters)
                                             {
+                                                if (pmt._content == null)
+                                                    pmt._content = this;
                                                 pmt.ShowField();
                                             }
                                         }
@@ -236,12 +239,12 @@ namespace NodeTreeEditor.Contents
             var l = (ArrayList) obj;
             var i = (MethodInvoker) l[0];
             var s = (string) l[1];
-            var p = (System.Reflection.ParameterInfo[]) l[2];
+            var p = (ParameterInfo[]) l[2];
             i.ClearParameter();
             i.selectedMethod = s;
             foreach (var pp in p)
             {
-                var ppp = new MethodInvoker.Parameter();
+                var ppp = new MethodInvoker.Parameter(this);
                 ppp.SetParameterType(pp.ParameterType);
                 ppp.parameterName = pp.Name;
                 i.parameters.Add(ppp);
