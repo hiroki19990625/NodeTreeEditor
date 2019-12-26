@@ -19,6 +19,7 @@ namespace NodeTreeEditor
             {
                 NodeEditorWindow.Open((Trigger) target);
             }
+
             GUI.color = Color.gray;
         }
     }

@@ -33,6 +33,8 @@ namespace NodeTreeEditor.Contents
             yield return next.Invoke();
         }
 
+#if UNITY_EDITOR
+
         public override void Draw()
         {
             GUILayout.BeginVertical(GUI.skin.box);
@@ -383,8 +385,6 @@ namespace NodeTreeEditor.Contents
 
             return typeof(void);
         }
-
-#if UNITY_EDITOR
 
         public override string GetDescription()
         {

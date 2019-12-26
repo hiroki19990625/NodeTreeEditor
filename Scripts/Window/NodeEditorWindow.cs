@@ -1,12 +1,13 @@
-using UnityEngine;
+#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NodeTreeEditor.Contents;
 using NodeTreeEditor.Variables;
-#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
-
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace NodeTreeEditor.Window
 {
@@ -247,7 +248,8 @@ namespace NodeTreeEditor.Window
 
                             case Value.ValueType.String:
                                 var t4 = (StringValue) v;
-                                t4.value = EditorGUILayout.TextField("値(string)", t4.value);
+                                EditorGUILayout.LabelField("値(string)");
+                                t4.value = EditorGUILayout.TextArea(t4.value);
                                 break;
 
                             case Value.ValueType.Object:
@@ -446,7 +448,7 @@ namespace NodeTreeEditor.Window
         {
             var list = (ArrayList) obj;
             var pos = (Vector2) list[0];
-            var sType = (System.Type) list[1];
+            var sType = (Type) list[1];
 
             var cn = (Content) target.gameObject.AddComponent(sType);
             cn.hideFlags = HideFlags.HideInInspector;

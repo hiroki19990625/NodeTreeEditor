@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
 using NodeTreeEditor.Utils;
+using UnityEngine;
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
 using UnityEditor;

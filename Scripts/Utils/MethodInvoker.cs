@@ -356,7 +356,11 @@ namespace NodeTreeEditor.Utils
                             v_string = v.value;
                             EditorGUILayout.HelpBox(v_string + " << 変数の値(" + variable.valueName + ")",
                                 MessageType.Info);
-                        }, () => v_string = EditorGUILayout.TextField(parameterName, v_string));
+                        }, () =>
+                        {
+                            EditorGUILayout.LabelField(parameterName);
+                            v_string = EditorGUILayout.TextArea(v_string);
+                        });
                         break;
 
                     case ParameterType.Transform:

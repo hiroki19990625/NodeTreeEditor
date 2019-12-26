@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using NodeTreeEditor.Contents;
+using UnityEngine;
 
 namespace NodeTreeEditor.Utils
 {

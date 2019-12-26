@@ -1,8 +1,8 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using NodeTreeEditor.Variables;
 using NodeTreeEditor.Utils;
+using NodeTreeEditor.Variables;
+using UnityEngine;
 #if UNITY_EDITOR
 using NodeTreeEditor.Window;
 using UnityEditor;
@@ -94,7 +94,8 @@ namespace NodeTreeEditor.Contents
                                         break;
 
                                     case Value.ValueType.String:
-                                        cond.rawString = EditorGUILayout.TextField("値(string)", cond.rawString);
+                                        EditorGUILayout.LabelField("値(string)");
+                                        cond.rawString = EditorGUILayout.TextArea(cond.rawString);
                                         break;
                                 }
 
